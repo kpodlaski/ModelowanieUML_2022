@@ -1,0 +1,31 @@
+@startuml
+
+actor Client
+actor Employee
+actor Person
+
+usecase Login
+usecase "Create Demand" as CreateDemand
+usecase "Pay Online" as Pay
+usecase "Pay by Card" as PCard
+usecase "Pay by Blik" as Blik
+usecase "Send vegatebles/demand to client" as Send
+usecase "Add product to Cart" as AddToCart
+
+Client -- Login
+Client -- AddToCart
+Client -- CreateDemand
+Client -- Pay
+Employee -- Send
+
+CreateDemand --> Pay : <<invoke>>
+Pay --> Send: <<invoke>>
+
+Client --|> Person : <<extends>>
+Employee --|> Person : <<extends>>
+
+Blik --|> Pay : <<extends>>
+PCard --|> Pay : <<extends>>
+
+
+@enduml
