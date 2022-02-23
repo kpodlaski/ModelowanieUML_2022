@@ -1,0 +1,31 @@
+@startuml
+
+actor Client
+actor Employee
+actor "Web Server" as Srv
+actor Person
+
+Employee --|> Person
+Client --|> Person
+
+
+usecase Register
+'Clients have to be verified
+usecase "Verify Client" as Verify
+usecase "Send mail message" as mail
+usecase "Online Payment" as pay
+usecase "Pay by Blik" as blik
+usecase "Pay by Card" as Card
+
+Client -- Register
+Employee -- Verify
+Srv -- mail
+Client -- pay
+
+Register --> Verify : <<invoke>>
+Register --> mail : <<invoke>>
+
+blik --|> pay : <<extends>>
+Card --|> pay : <<extends>>
+
+@enduml
