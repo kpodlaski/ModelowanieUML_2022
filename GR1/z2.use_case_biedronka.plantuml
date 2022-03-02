@@ -1,0 +1,65 @@
+@startuml
+
+actor Employee
+actor Manager
+actor Cashier
+actor "Standing Worker"
+actor "Hall Worker"
+actor "Shift Chief"
+
+actor "Owner"
+actor "Security"
+
+actor Bank 
+actor "Supply Driver"
+actor Supplier
+
+actor Client 
+
+Manager --|> Employee
+(Shift Chief) --|> Manager
+Cashier --|> (Hall Worker)
+(Hall Worker) --|> Employee
+(Standing Worker) --|> Employee
+(Security) --|> Employee
+
+
+usecase "register machine work" as rmw
+usecase "supplies drop" as sd
+usecase "cleaning"
+usecase "client help" as ch
+usecase "supplies managment" as sm
+usecase "guarding"
+usecase "solve stealling issues"
+usecase "buying"
+usecase "pay"
+usecase "steal"
+
+usecase "employing new workers" as enw
+usecase "deliver supply" 
+'usecase "Receive supply"
+usecase "Order supply"
+usecase "manageing"
+
+usecase "bake product"
+usecase "Take product from shelf"
+usecase "Take product form special standing"
+usecase "Put product on shelf"
+
+usecase "Scan product"
+usecase "Pay"
+usecase "Pay by cash"
+usecase "Mobile/Card/Coupons Payment"
+usecase "check payment method"
+
+usecase "Complains"
+usecase "Repair transactions"
+
+usecase "Start cashiere station"
+usecase "Settle sum on cashiere station"
+
+Cashier -- (Scan product)
+Client -- (Scan product) : "<<self service case>>"
+
+
+@enduml
