@@ -58,8 +58,8 @@ usecase "Settle sum on cashiere station"
 (Manager) -- (Deliver Supply)
 (Hall Worker) -- (Deliver Supply)
 
-Client -- (Scan Product) : <<self service>>
-Cashier -- (Scan Product) 
+Client -- (Scan product on cashiere machine) : <<self service>>
+Cashier -- (Scan product on cashiere machine) 
 
 (Buy Product) --> (Scan Product) : <<include>>
 (Buy Product) --> (Take product from shelf) : <<include>>
