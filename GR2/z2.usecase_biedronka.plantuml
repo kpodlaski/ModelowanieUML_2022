@@ -1,0 +1,67 @@
+@startuml
+
+actor Employee
+actor Manager
+actor Cashier
+
+actor "Shop Manager"
+actor "Security"
+
+actor "Standing Worker"
+actor "Hall Worker"
+actor "Shift Chief"
+
+actor Bank 
+
+actor "Supply Driver"
+actor Supplier
+
+actor Client 
+
+Manager --|> Employee
+(Shift Chief) --|> Manager
+Cashier --|> (Hall Worker)
+(Hall Worker) --|> Employee
+(Standing Worker) --|> Employee
+Security --|> Employee
+(Shop Manager) --|> Manager
+
+usecase "Payment"
+usecase "Buy Product"
+usecase "Order Supply"
+usecase "Deliver Supply"
+usecase "Cleaning"
+usecase "Put products on shelf"
+usecase "Observation/guarding"
+usecase "Hire new employee"
+usecase "Fire employee"
+usecase "Cashiere service"
+usecase "Create shift schedule"
+
+usecase "Take product from shelf"
+
+usecase "Scan product on cashiere machine"
+usecase "Summarize shoppings"
+usecase "Pay"
+usecase "Pay by cash"
+usecase "Mobile/Card/Coupon Payment"
+
+usecase "Complains"
+usecase "Repair transactions"
+
+usecase "Start cashiere station"
+usecase "Settle sum on cashiere station"
+
+(Deliver Supply) --> (Put productson shelf)  : <<invoke>>
+
+(Supply Driver) -- (Deliver Supply)
+(Manager) -- (Deliver Supply)
+(Hall Worker) -- (Deliver Supply)
+
+Client -- (Scan Product) : <<self service>>
+Cashier -- (Scan Product) 
+
+(Buy Product) --> (Scan Product) : <<include>>
+(Buy Product) --> (Take product from shelf) : <<include>>
+
+@enduml
