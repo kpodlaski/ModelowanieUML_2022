@@ -61,7 +61,7 @@ usecase "Settle sum on cashiere station"
 Client -- (Scan product on cashiere machine) : <<self service>>
 Cashier -- (Scan product on cashiere machine) 
 
-(Buy Product) --> (Scan Product) : <<include>>
+(Buy Product) --> (Scan product on cashiere machine) : <<include>>
 (Buy Product) --> (Take product from shelf) : <<include>>
 
 @enduml
