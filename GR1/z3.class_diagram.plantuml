@@ -1,0 +1,60 @@
+@startuml
+
+class Person{
+    Name 
+    Surname 
+    Email
+    Password
+}
+
+class Client{
+    'Cart
+}
+
+class Employee{
+    Pesel
+}
+
+class Category{
+    Name
+}
+
+class Product{
+    Price : double
+    VatCategory
+    Description
+    Image
+}
+
+class Cart{
+    'Products[] 
+}
+
+class Receip{
+    Description
+    Sum
+    'Cart
+}
+
+class Invoice{
+    Client
+    'Receip
+}
+
+class Bank{
+    
+}
+
+Client --|> Person
+Employee --|> Person
+Product --o "Products"   Cart
+'Cart zawiera 0 lub więcej Produktów, pod nazwą Products
+
+Client "Cart" - Cart
+Invoice "Receip" -- Receip
+Receip "Cart" -- Cart
+
+Product "Category" -- Category
+Category "Parent" -- Category
+
+@enduml
