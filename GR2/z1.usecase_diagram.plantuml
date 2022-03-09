@@ -16,6 +16,7 @@ usecase "Send mail message" as mail
 usecase "Online Payment" as pay
 usecase "Pay by Blik" as blik
 usecase "Pay by Card" as Card
+usecase "Select Product" 
 
 Client -- Register
 Employee -- Verify
@@ -27,5 +28,7 @@ Register --> mail : <<invoke>>
 
 blik --|> pay : <<extends>>
 Card --|> pay : <<extends>>
+(Select Product) -- Client
+(Select Product) -- Srv
 
 @enduml

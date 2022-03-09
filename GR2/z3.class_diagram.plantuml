@@ -1,0 +1,54 @@
+@startuml
+
+class Person{
+    Name
+    Surname 
+    Email 
+    Password
+}
+
+class Employee{
+    Pesel
+}
+
+class Client{
+    Company
+    RoleInCompany
+}
+
+class Product{
+    Price
+    VatCategory 
+    Description 
+    Image 
+}
+
+class Category{
+    Name
+    Description
+}
+
+class Order{
+    'Products[]
+}
+
+class Invoice{
+    'Order
+}
+
+class Mail{
+    To : Person
+    From : Person
+    Content 
+    Attachments
+}
+
+Person <|-- Employee
+Person <|-- Client
+
+Product --* "Products" Order 
+Invoice "Order" -- Order
+Product "Category" - Category
+Category "Parent" -- Category
+Invoice "Client" --  Client
+@enduml
