@@ -1,0 +1,58 @@
+@startuml
+
+class Employee{
+
+}
+
+class Person {}
+
+class Client{}
+
+class Post{
+    ' description of person responsibilitiess
+}
+
+class Product {}
+class Cart{}
+class Receipt{}
+class Invoice {}
+class Bank {}
+class Pay {}
+class Shelf {}
+class Supplier {}
+class Division {}
+class Register {
+    scanProduct(Product)
+    'createReceipt(Cart)
+}
+class SelfServiceRegister{
+} 
+
+Employee --|> Person
+Client --|> Person
+
+Post -- Employee
+Client -- Cart
+Cart -- Invoice
+Invoice -- Receipt
+' This need to be redesigned Cart --> iInvoice --> Receip
+Receipt -- Pay
+'Pay -- Bank
+Cart *-- Product
+Shelf *-- Product
+Division *-- Shelf
+Employee --* Division
+Register -- Employee
+SelfServiceRegister --|> Register
+Register ...> Receipt : <<creates>>
+Register -- Bank
+
+'TODO:
+' Documents about receiving shippment
+' Product storage, warehouse
+' security
+' client complains
+' ...
+
+
+@enduml

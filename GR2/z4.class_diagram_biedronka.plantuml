@@ -1,0 +1,42 @@
+@startuml
+
+class Person{}
+class Employee{}
+class Client{}
+class Manager{}
+'TODO
+' Classes that are derived from Manger clas, and other Employees
+
+class Supply{}
+class Register{}
+class SelfServiceRegister{} 
+class Product {}
+class BiedronkaShop{}
+class WorkSchedule{}
+class Cart{}
+class Bank {}
+class Payment{}
+class Receipt{}
+class SupplyDriver{}
+class Shelf{}
+
+Client --|> Person
+Employee --|> Person
+Manager --|> Employee
+SelfServiceRegister --|> Register
+Employee --* WorkSchedule
+Cart *-- Product
+Client -- Cart 
+Register -- Bank
+Register -- Receipt : <<create>>
+Client -- Receipt 
+Supply -- SupplyDriver
+Supply -- BiedronkaShop
+Shelf --* Product
+BiedronkaShop *-- Employee
+BiedronkaShop *--Shelf
+Payment -- Register
+BiedronkaShop *-- Register
+
+
+@enduml

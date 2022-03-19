@@ -1,0 +1,37 @@
+@startuml
+    'Intenet Shue shop 
+    actor Client
+    actor Employee
+    actor "Online Payment System" as OPS
+    actor "Courier Company"
+
+    usecase "Search Products"
+    usecase "Filter List of Products" as FLP
+    usecase "Sort List of Products"
+    usecase "Add to Cart"
+    usecase "Remove from Cart"
+    usecase "Create Order"
+    usecase "Close Cart"
+    usecase "Payment"
+    usecase "Online Payment"
+    usecase "Delivery Payment"
+    usecase "Delivery"
+
+    (Online Payment) --|> Payment
+    (Delivery Payment) --|> Payment
+
+    Client -- (Search Products)
+    Client -- FLP
+    Client -- (Sort List of Products)
+    Client -- (Add to Cart)
+    Client -- (Remove from Cart)
+    Client -- (Create Order)
+    (Create Order) --> (Close Cart) : <<invoke>>
+    (Close Cart) --> Payment : <<invoke>>
+    OPS -- (Online Payment)
+    Client -- Payment
+    Client -- Delivery
+    (Courier Company) -- Delivery
+    (Courier Company) -- (Delivery Payment)
+    Employee -- Delivery
+@enduml
