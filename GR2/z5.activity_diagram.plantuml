@@ -1,0 +1,33 @@
+@startuml
+
+(*) --> if "Is client logged in?" then 
+        --> [no] "log in"
+        --> "go to main page"
+    else 
+        --> [yes] "go to main page"
+    endif 
+    "go to main page" --> "Client adds products to Cart"
+    --> "Finish shopping"
+    --> if "Select payment method" then
+        --> [card] "Redirect to online payment system"
+        --> "Verify payment"
+        --> "Send confirmation email"
+    else 
+        --> [transfer] "Show payment details"
+        --> "Wait for transfer"
+        --> "Send confirmation email"
+    else 
+        --> [blik] "genrate QRcode"
+        --> "Wait for confirmation"
+        --> "Send confirmation email"
+    endif
+    "Send confirmation email" --> "Take products list to be send"
+    --> if "Are all products packaged?" as packif then
+        -->[yes] "Add adress"
+        --> "Send package"
+        --> (*)
+    else 
+        -->[no] "pack next product on list"
+        --> packif
+
+@enduml
