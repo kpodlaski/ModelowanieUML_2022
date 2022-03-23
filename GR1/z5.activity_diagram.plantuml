@@ -1,0 +1,35 @@
+@startuml
+
+(*) --> if "Client is logged on" then 
+        -->[yes] "Show main view"
+    else 
+        -->[no] "Log in"
+        --> "Show main view"
+    endif 
+    --> "Add Products to Cart"
+    --> "Close Cart, proceed to payment"
+    --> if "Payment method" then
+        -->[card] "Rediret to card service"
+        --> Verify payment 
+        --> "Send confirmation mail"
+        else
+        -->[transfer] "Show payment details"
+        --> "Wait till payment arrive"
+        --> "Send confirmation mail"
+    "Send confirmation mail" --> "Prepare package to be send"
+    --> "check shopping list"
+    --> if "all elements are packed"
+        -->[no] "add next product to package"
+        --> "check shopping list"
+        else 
+        -->[yes] "Add address to package"
+        --> ===A=== 
+        --> "Send Package" 
+        --> ===A2===
+        ===A=== --> "Add package to the system" 
+        --> ===A2===
+        --> (*)
+    
+
+
+@enduml
