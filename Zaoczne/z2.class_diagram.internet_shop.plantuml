@@ -1,0 +1,57 @@
+@startuml
+
+class Person{
+    name
+}
+
+class Client{
+    address
+}
+
+class Employee{
+    class role
+}
+
+class Cart{
+
+}
+
+class Product{
+    name
+    price
+    image 
+}
+
+class Order{}
+
+class Category {}
+
+class Shop{}
+
+class OnlinePayment{
+
+}
+
+class CourierCompany{
+
+}
+
+Client --|> Person
+Employee --|> Person
+Cart -- Client
+Cart o-- Product
+Cart --> Order : <<create>>
+Order o-- Product
+Product "category" -- Category
+Category -down- "parent" Category
+Employee --o Shop
+Client --o Shop
+Product --o Shop
+Shop -- OnlinePayment
+Shop -- CourierCompany
+
+
+
+
+
+@enduml
