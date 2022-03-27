@@ -9,7 +9,7 @@ class Client{
 }
 
 class Employee{
-    class role
+    role
 }
 
 class Cart{
@@ -43,7 +43,7 @@ Cart o-- Product
 Cart --> Order : <<create>>
 Order o-- Product
 Product "category" -- Category
-Category -down- "parent" Category
+Category -- "parent" Category
 Employee --o Shop
 Client --o Shop
 Product --o Shop
