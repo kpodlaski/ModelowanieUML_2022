@@ -36,7 +36,8 @@ else transfer payment
     return 
     Shop -> Shop : wait for payment
 end
-Shop -> Shop : send confirmation mail
+'Order Mail Server (element of Shop) to send an email 
+Shop -> Shop : send confirmation mail client mail address
 Shop -> Employee : prepare package to send
 loop unitl all packaged 
     Employee -> Cart: take next product
