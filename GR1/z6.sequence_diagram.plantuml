@@ -1,0 +1,56 @@
+@startuml
+actor Client
+
+'TODD Missing Shop object in Class/Object diagram
+Client -> Shop : log in  
+alt proper username and password
+    'Shop --> Client
+    return : status = OK, show MainView
+
+else wrong username and password
+    return : status = FAIL 
+loop 3 times 
+    Client -> Shop : try to log in
+    return status
+end
+end
+
+loop until all products in Cart
+    Client -> Client: select Product
+    Client -> Cart : add selected Product
+    return
+end
+
+Client -> Cart : close
+Cart -> Shop : finilize transaction for client
+Shop -> Client : select payment method
+alt card payment
+    Client -> Shop : card payment
+    Shop -> Bank : proceed with payment
+    Bank -> Client : pay me
+    return
+    Bank -> Shop : payment finalized
+else transfer payment
+    Client -> Shop : transfer payment
+    Shop -> Client: show transfer details
+    return 
+    Shop -> Shop : wait for payment
+end
+Shop -> Shop : send confirmation mail
+Shop -> Employee : prepare package to send
+loop unitl all packaged 
+    Employee -> Cart: take next product
+    return 
+    'TODO add Packae class or treat that as real not application object
+    Employee -> Package : add product
+    return
+end
+'TODO where take address
+Employee -> Package: add Addres to client
+return
+'TODO add Courier Company class
+Employee -> "Courier Company" : send Package
+Employee -x Cart
+Employee -> Shop: register package
+'TODO If and how store data in database
+@enduml
