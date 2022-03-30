@@ -1,0 +1,54 @@
+@startuml
+actor Client 
+
+alt use is not logged
+'TODO add Shop to class diagram
+Client -> Shop : login
+alt successful login
+    return : status=Ok, redirect to main page
+else unsuccesful 
+    Shop --> Client :  status=Fail, repeat until success
+end
+
+loop until all products found
+    Client -> Client : select product
+    Client -> Cart : add product 
+    return
+end
+
+Client -> Shop : finialize Cart
+Shop -> Shop : count cart value and taxes
+Shop -> Client : select payment method
+alt payment by card
+    'TODO online payment system in class diagram
+    Shop -> Bank : proceed with card payment
+    Bank -> Client : authorize payment
+    return
+    Bank --> Shop: transaction finished
+    'TODO failed payment case 
+else payment by transfer
+    Shop -> Client: show transfer details
+    Shop -> Shop : wait for transfer
+else payment by blik 
+    Shop -> Shop: generate QRCode
+    Shop -> Client : show QRCode
+    Shop -> Shop : wait for blik confirmation
+end
+Shop -> MailSystem: send confirmation mail to client
+return
+actor Employee
+Shop -> Employee : prepare Cart to be shipped
+loop until all products packaged
+    Employee -> Cart: next product
+    return product
+    Employee -> Package : add product
+end
+Employee -> Package : put address
+'TODO Courier company is missing in class diagram
+Employee -> Courier : ship package
+return
+Employee --> Shop : Cart shipped
+Shop -X Cart
+'TODO Is there a databese? when operations occur 
+
+@enduml
