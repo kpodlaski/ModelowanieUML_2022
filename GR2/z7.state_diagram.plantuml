@@ -1,0 +1,67 @@
+@startuml
+
+state "Anonymous User" as Annonymous
+state "Logged In User" as LoggedIn
+state "Empty Cart" as Empty
+state c1 <<choice>>
+state c2 <<choice>>
+state c3 <<choice>>
+state c4 <<choice>>
+state Shopping 
+state "Payment in progress" as Payment
+state Shippment 
+state End
+
+Annonymous : session started
+Annonymous : no user information
+Annonymous : no User object
+Annonymous : no Cart object
+
+LoggedIn : User object created
+
+Empty : user is logged in
+Empty : cart is empty
+
+Shopping : cart is not empty
+Shopping : n - number of products in
+
+Payment : payment online started
+Payment : user redirected to Bank web service
+Payment : cart is blocked
+
+Shippment : products ready to sent to user
+Shippment : cart is blocked
+Shippment : transaction loged in database 
+Shippment : shipment status in progres
+
+End : cart is closed
+End : shipment status sent
+
+
+
+[*] -> Annonymous
+Annonymous --> c1 : logging in
+c1 -> LoggedIn : [Success]
+c1 -> Annonymous : [Fail]
+LoggedIn : log in
+LoggedIn --> Empty
+Empty --> Shopping : add product to cart
+' Alternative events in different description 
+'Shopping --> Empty : remove product
+'Shopping --> Shopping : remove product 
+
+Shopping --> c2 : remove product
+c2 --> Empty : [n=0]
+c2 --> Shopping : [n>0]
+
+Shopping --> c3 : fininalyze shopping
+c3 --> Payment : [online payment]
+c3 --> Shippment : [offline payment]
+Payment --> c4 
+c4 --> Shippment : [payment confirmed]
+c4 --> Shopping : [payment failed]
+c4 --> Shopping : [payment took too long]
+Shippment --> End : employee sent package
+
+End -> [*]
+@enduml
