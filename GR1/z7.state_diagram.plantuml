@@ -1,0 +1,54 @@
+@startuml
+state c1 <<choice>>
+state c2 <<choice>>
+state Anonymous
+state LoggedIn
+state "Cart Empty" as Empty
+state "Shopping in progress" as Shopping
+state "Payment in progress" as Payment
+state "Ready to shippment" as Shippment
+state "Cart closed" as End
+
+Anonymous : user is not known
+Anonymous : no name parameter
+Anonymous : user object do not exist
+
+LoggedIn : user is known
+LoggedIn : name parameter is set
+LoggedIn : user object exist
+
+Empty : user is LoggedIn
+Empty : no products in Cart
+
+Shopping : there are products in Cart
+Shopping : no payment started
+
+Payment : online payment has been started
+Payment : no confirmation form bank
+
+Shippment : products ready to be sent 
+
+End : products were sent to client 
+End : Cars is stored in database
+
+
+[*] -> Anonymous
+
+Anonymous --> c1 : log in
+c1 --> LoggedIn : [Success]
+c1 --> Anonymous : [Failure]
+LoggedIn --> Empty
+Empty --> Shopping : add product
+Shopping --> Shopping : add product
+Shopping --> c2 : finialize cart
+c2 --> Payment : [online payment]
+c2 --> Shippment : [bank transfer]
+Payment --> Shippment : payment confirmation
+c2 --> Shopping : [payment declined]
+c2 --> Shopping : [paymet too long]
+Shippment --> End : send confirmed by employee
+End --> Empty : client continue session
+Empty --> Empty : finalize cart
+End --> [*] : session ended
+
+@enduml
