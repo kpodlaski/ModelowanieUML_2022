@@ -1,0 +1,138 @@
+@startuml
+' Diagram based on diaram z3.class_diagram
+
+package BuisnessDomain{ 
+class Person{
+    Name 
+    Surname 
+    Email
+    Password
+}
+
+class Client{
+    'Cart
+}
+
+class Employee{
+    Pesel
+}
+
+class Category{
+    Name
+}
+
+class Product{
+    Price : double
+    VatCategory
+    Description
+    Image
+}
+
+class Cart{
+    'Products[] 
+
+    addProduct(p:Prodduct)
+}
+
+class Receip{
+    Description
+    Sum
+    'Cart
+}
+
+class Invoice{
+    Client
+    'Receip
+}
+}
+
+class Bank{
+    
+}
+
+
+'we can have web ui as well as mobile ui
+interface UI{
+    showData(Data, ViewType)
+}
+
+class Shop{
+    'creator fo the application
+    buildSystem()
+}
+
+package Controllers {
+abstract UserControl{
+    'interface used for controlling user inputs and commands
+}
+
+class SearchControl{
+    'Controller for search operations
+    searchProductByName(name:String)
+    searchProductByCategory(name:String)
+}
+
+class ProductDetailsControl{
+    'Controller of product opperations
+    showProduct(p:Product)
+}
+
+class PaymentControl{
+}
+
+class CartControl{
+
+}
+
+}
+
+package PersistenceLayer{
+
+'for open/closed principle it is an interface
+
+interface DAO{
+    selectProducts(query):Product[]
+    insertProduct(p:Product):bool
+    updateProduct(p:Product):bool
+    deleteProduct(p:Product):bool
+}
+
+'i have at least one of these three following classes
+class DBDAO {}
+DBDAO --|> DAO
+
+'class CloudDAO {}
+'CloudDAO --|> DAO
+
+'class FileDAO {}
+'FileDAO --|> DAO
+
+}
+
+Client --|> Person
+Employee --|> Person
+Product --o "products"   Cart
+'Cart zawiera 0 lub więcej Produktów, pod nazwą Products
+
+Client "cart" - Cart
+Invoice "receip" -- Receip
+Receip "cart" -- Cart
+
+Product "category" -- Category
+Category "parent" -- Category
+UserControl "ui" -- UI
+UserControl "dao" -- DAO
+PaymentControl "bank" --Bank
+
+
+SearchControl --|> UserControl
+ProductDetailsControl --|> UserControl
+PaymentControl --|> UserControl
+CartControl --|> UserControl
+
+Shop "ui" -- UI
+Shop "dao" -- DAO
+Shop "controllers" *-- UserControl
+
+
+@enduml
