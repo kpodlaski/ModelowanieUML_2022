@@ -1,0 +1,126 @@
+@startuml
+
+'based on z3.class_diagram
+
+package BussinessLogic{
+class Person{
+    name
+    surname 
+    email 
+    password
+}
+
+class Employee{
+    pesel
+}
+
+class Client{
+    company
+    roleInCompany
+}
+
+class Product{
+    price
+    vatCategory 
+    description 
+    image 
+}
+
+class Category{
+    name
+    description
+}
+
+class Order{
+    'products[]
+}
+
+class Invoice{
+    'order
+}
+}
+
+class Mail{
+    to : Person
+    from : Person
+    content 
+    attachments
+}
+
+class Shop{
+    buildSystem()
+}
+
+package UserInterface{
+abstract UI {
+
+}
+
+class ConsoleUI{}
+}
+
+'Application Logic
+package ComnandAndControll{
+abstract Commands{
+
+}
+
+class ProductCommands{
+    findProductsByName(name:String):Products[]
+    getProductById(id:int):Product
+    findProductByCateory(c:Category):Product[]
+}
+
+class UserCommands{
+    login(name:String, passw:String):bool
+    createUser(data)
+}
+
+class OrderCommands{
+    addProductToOrder(p:Product, o:Order)
+    finializeOrder(o:Order)
+    createInvoice(o:Order):Invoice
+}
+}
+
+package Peristance{
+
+abstract DAO{
+    
+}
+
+interface ProductDAO{
+    selectProducts(query):Products[]
+    updateProduct(p:Product)
+    insertProduct(p:Product)
+    deleteProduct(p:Product)
+}
+' i can change persistence solution, db, cloud, files ...
+class DBProductDAO{}
+
+'class CloudPersonDAO{}
+'class FilePersonDAO{}
+}
+
+
+Person <|-- Employee
+Person <|-- Client
+OrderCommands --|> Commands
+UserCommands --|> Commands
+ProductCommands --|> Commands
+ConsoleUI --|> UI
+
+DAO -- ProductDAO
+ProductDAO <|-- DBProductDAO
+
+Product --* "Products" Order 
+Invoice "order" -- Order
+Product "category" - Category
+Category "parent" -- Category
+Invoice "client" --  Client
+Shop "ui" -- UI
+Shop "controlls" *-- Commands
+Commands "dao" -- DAO
+
+
+@enduml

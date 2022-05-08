@@ -1,0 +1,34 @@
+@startuml
+
+(*) --> "Logging in"
+--> "Search products \n Get List of Products \n top 10"
+if "Has next element" as if1 then 
+    --> [No] "Close Cart"
+    else 
+    --> [Yes] "Get next element form list" as Next 
+endif 
+    Next --> if "Is Element accepted? " then
+    --> [Yes] "Add to Cart" 
+    --> "Close Cart"
+    else 
+    --> [No] if1
+endif
+"Close Cart" --> if "Payment method" as if2 then 
+    --> [Online Payment] "Redirect to OPS operator" as OPS
+    if "Is Paymend accepted" then 
+        --> [Yes] "Fill delivery data"
+        else
+        --> [No] if2
+    endif
+    else
+        --> [Delivery Payment] "Fill delivery data" 
+    endif
+"Fill delivery data" --> ====B1===
+--> "Employee pack order" 
+--> ===B2===
+===B1=== --> "Create invoice/receip"
+--> ===B2===
+--> "Send order to Courier Company"
+--> (*)
+
+@enduml
