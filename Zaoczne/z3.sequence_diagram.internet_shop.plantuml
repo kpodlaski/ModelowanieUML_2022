@@ -1,0 +1,34 @@
+@startuml
+actor User
+
+Shop -> Shop : sum_order(Order)
+activate Shop
+return value
+Shop -> "OPS" : start_payment(transaction_id, transaction_data, value)
+Shop -> User : redirect to OPS
+activate User
+User -> OPS : input card data
+activate OPS
+OPS -> Bank : authorize operation
+activate Bank
+alt sucessful authorization
+    return success
+    OPS --> User : redirect to Shop
+    deactivate User
+    OPS --> Shop : payment sucess
+    deactivate OPS
+    Shop -> Employee : prepare delivery 
+else operation not authorized
+    activate User
+    activate OPS
+    activate Bank
+    Bank --> OPS : failure
+    deactivate Bank
+    OPS --> User : cancel payment
+    deactivate User
+    OPS --> Shop : cancel payment
+    deactivate OPS
+    Shop -> Shop : cancel order
+
+end
+@enduml
