@@ -9,7 +9,7 @@ if "Has next element?" as if1 then
 endif 
     Next --> if "Is Element accepted?" then
     --> [Yes] "Add to Cart" 
-    --> "Create Order"
+    --> if1
     else 
     --> [No] if1
 endif

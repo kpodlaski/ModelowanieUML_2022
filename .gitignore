@@ -3,3 +3,7 @@ out/
 prepared/
 .vscode/settings.json
 .vscode/settings.json
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj*
