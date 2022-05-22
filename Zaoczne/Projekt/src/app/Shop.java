@@ -3,7 +3,9 @@ package app;
 import java.util.Scanner;
 
 public class Shop {
-    static boolean paymentVerified = false;
+    static boolean confirmedPaymentStatus = false;
+    private static boolean paymentStatus;
+
     public static void main(String[] a) throws InterruptedException {
         Scanner reader = new Scanner(System.in);
         //LogInUser
@@ -16,6 +18,8 @@ public class Shop {
         //Obsługa rozkazów
         //Zakończ zakupy, stwórz zamówienie
         Order order = client.createOrder();
+        //Diagram sekwencji
+        double value = sum_order(order);
         System.out.println("Jak chesz płacić:");
         System.out.println("[1] transfer");
         System.out.println("[2] online");
@@ -25,14 +29,22 @@ public class Shop {
             case 1 : //Do transfer
                     break;
             case 2 : //Do online
+                    // Diagram sekwencji
+                    //Zarejestruj płatność w OPS
+                    //Czekaj na zatwierdzenie
                     break;
             case 3 : //Do blik
                     break;
         }
         //Send confirmation mail
         System.out.println("Czekanm na płatność");
-        while (!paymentVerified){
+        while (!confirmedPaymentStatus){
             Thread.sleep(300);
+        }
+        if (!paymentStatus){
+            System.out.println("Cancel order");
+            order = null;
+            return;
         }
         for (Product p: order.getProducts()) {
             System.out.println("Zapakuj "+p);
@@ -42,7 +54,16 @@ public class Shop {
         System.out.println(client.getAddress());
     }
 
-    static void  setPaymentVerifiedToTrue(){
-        paymentVerified=true;
+    private static double sum_order(Order order) {
+        double v = 0.0;
+        for (Product p : order.getProducts()) {
+            v+=p.getPrice();
+        }
+        return v;
+    }
+
+    static void  confirmPaymentStatus(boolean status){
+        confirmedPaymentStatus =true;
+        paymentStatus = status;
     }
 }

@@ -12,4 +12,8 @@ public class Client extends Person{
     public Order createOrder() {
         return cart.createOrder();
     }
+
+    public String getAddress() {
+        return address;
+    }
 }

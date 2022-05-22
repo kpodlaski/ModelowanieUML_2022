@@ -6,4 +6,8 @@ public class Product {
     String image;
     double price;
     Category category;
+
+    public double getPrice() {
+        return price;
+    }
 }
