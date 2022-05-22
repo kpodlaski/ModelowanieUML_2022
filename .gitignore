@@ -7,3 +7,5 @@ prepared/
 *.sln
 *.vcxproj
 *.vcxproj*
+*.iml
+.idea
